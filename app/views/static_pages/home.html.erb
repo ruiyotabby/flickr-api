@@ -1,0 +1,21 @@
+<%= form_with method: :get do |f| %>
+  <%= f.label :user_id, "Enter your user id* (required)" %><br>
+  <%= f.text_field :user_id %><br>
+
+  <%= f.label :per_page, "Enter photos to display* (required)" %><br>
+  <%= f.number_field :per_page %><br>
+
+  <%= f.submit 'search' %><br>
+<% end %>
+
+<% if @response['stat'] == 'fail' %>
+  <p>Failed <%= @response['message'] %></p>
+<% else %>
+  <% if @response['photos']['photo'].empty? %>
+    <p>No photos found for this user</p>
+  <% else %>
+    <% @response['photos']['photo'].map do |photo| %>
+      <%= display_photo(photo['id']) %>
+    <% end %>
+  <% end %>
+<% end %>
