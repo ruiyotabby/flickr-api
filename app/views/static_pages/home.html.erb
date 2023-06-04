@@ -2,8 +2,8 @@
   <%= f.label :user_id, "Enter your user id* (required)" %><br>
   <%= f.text_field :user_id %><br>
 
-  <%= f.label :per_page, "Enter photos to display* (required)" %><br>
-  <%= f.number_field :per_page %><br>
+  <%= f.label :per_page, "Enter photos to display" %><br>
+  <%= f.number_field :per_page, value: '10' %><br>
 
   <%= f.submit 'search' %><br>
 <% end %>
