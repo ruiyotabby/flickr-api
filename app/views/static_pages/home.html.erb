@@ -1,4 +1,4 @@
-<%= form_with method: :get do |f| %>
+<%= form_with method: :get, data: { turbo_frame: 'response' } do |f| %>
   <%= f.label :user_id, "Enter your user id* (required)" %><br>
   <%= f.text_field :user_id %><br>
 
@@ -8,14 +8,16 @@
   <%= f.submit 'search' %><br>
 <% end %>
 
-<% if @response['stat'] == 'fail' %>
-  <p>Failed <%= @response['message'] %></p>
-<% else %>
-  <% if @response['photos']['photo'].empty? %>
-    <p>No photos found for this user</p>
+<%= turbo_frame_tag 'response' do %>
+  <% if @response['stat'] == 'fail' %>
+    <p>Failed <%= @response['message'] %></p>
   <% else %>
-    <% @response['photos']['photo'].map do |photo| %>
-      <%= display_photo(photo['id']) %>
+    <% if @response['photos']['photo'].empty? %>
+      <p>No photos found for this user</p>
+    <% else %>
+      <% @response['photos']['photo'].map do |photo| %>
+        <%= display_photo(photo['id']) %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
